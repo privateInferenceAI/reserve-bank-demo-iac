@@ -17,8 +17,14 @@ variable "environment" {
 }
 
 variable "admin_cidr" {
-  description = "Admin IP for bastion SSH access"
+  description = "Admin IPv4 CIDR for bastion SSH access"
   type        = string
+}
+
+variable "admin_cidr_ipv6" {
+  description = "Admin IPv6 CIDR for bastion SSH access (optional)"
+  type        = string
+  default     = ""
 }
 
 variable "ec2_key_name" {

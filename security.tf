@@ -33,11 +33,12 @@ resource "aws_security_group" "ec2" {
   description = "EC2 gateway hosts"
 
   ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = [var.admin_cidr]
-    description = "SSH from admin CIDR"
+    from_port         = 22
+    to_port           = 22
+    protocol          = "tcp"
+    cidr_blocks       = [var.admin_cidr]
+    ipv6_cidr_blocks  = var.admin_cidr_ipv6 != "" ? [var.admin_cidr_ipv6] : []
+    description       = "SSH from admin CIDR"
   }
 
   ingress {

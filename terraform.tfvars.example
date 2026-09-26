@@ -1,5 +1,6 @@
 aws_region          = "us-east-1"
 admin_cidr          = "YOUR_PUBLIC_IP/32"
+admin_cidr_ipv6     = "YOUR_PUBLIC_IPV6/128"
 ec2_key_name        = "YOUR_EC2_KEY_NAME"
 acm_certificate_arn = "arn:aws:acm:us-east-1:YOUR_ACCOUNT:certificate/YOUR_CERT_ID"
 db_password         = "CHANGE_ME_32_CHARS_MIN"
