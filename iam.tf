@@ -56,6 +56,22 @@ resource "aws_iam_role_policy" "secrets" {
   })
 }
 
+resource "aws_iam_role_policy" "rds" {
+  name = "${var.project_name}-rds-describe"
+  role = aws_iam_role.ec2.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Action = [
+        "rds:DescribeDBInstances"
+      ]
+      Resource = "*"
+    }]
+  })
+}
+
 resource "aws_iam_role_policy" "ssm" {
   name = "${var.project_name}-ssm-session-manager"
   role = aws_iam_role.ec2.id
