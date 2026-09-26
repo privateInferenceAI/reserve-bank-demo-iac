@@ -56,6 +56,32 @@ resource "aws_iam_role_policy" "secrets" {
   })
 }
 
+resource "aws_iam_role_policy" "ssm" {
+  name = "${var.project_name}-ssm-session-manager"
+  role = aws_iam_role.ec2.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Action = [
+        "ssmmessages:CreateControlChannel",
+        "ssmmessages:CreateDataChannel",
+        "ssmmessages:OpenControlChannel",
+        "ssmmessages:OpenDataChannel",
+        "ssm:UpdateInstanceInformation",
+        "ec2messages:AcknowledgeMessage",
+        "ec2messages:DeleteMessage",
+        "ec2messages:FailMessage",
+        "ec2messages:GetEndpoint",
+        "ec2messages:GetMessages",
+        "ec2messages:SendReply"
+      ]
+      Resource = "*"
+    }]
+  })
+}
+
 resource "aws_iam_instance_profile" "ec2" {
   name = "${var.project_name}-litellm-profile"
   role = aws_iam_role.ec2.name
