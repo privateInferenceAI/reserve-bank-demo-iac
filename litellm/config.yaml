@@ -1,0 +1,33 @@
+# LiteLLM gateway config — Phase 1 + Phase 2
+# gateway-test is a mock model for plumbing tests.
+# company-claude routes to AWS Bedrock Claude Haiku 4.5.
+
+model_list:
+  - model_name: gateway-test
+    litellm_params:
+      # MOCK ONLY: LiteLLM returns mock_response directly without calling any provider.
+      # The OpenAI model name below is just a routing placeholder LiteLLM requires.
+      # No OpenAI API key is used and no token leaves this host.
+      model: openai/gpt-3.5-turbo
+      mock_response: "Gateway is responding. This is a mock response for Phase 1 testing."
+
+  - model_name: company-claude
+    litellm_params:
+      # Use the Bedrock inference profile ID, not the foundation model ID.
+      # Newer Claude models on Bedrock require inference-profile invocation.
+      model: bedrock/us.anthropic.claude-haiku-4-5-20251001-v1:0
+      aws_region_name: us-east-1
+      # Bedrock auth comes from the boto3 credential chain:
+      # AWS_ACCESS_KEY_ID + AWS_SECRET_ACCESS_KEY in .env (Phase 2),
+      # or an attached IAM instance role (Phase 5/6).
+
+litellm_settings:
+  drop_params: true
+  set_verbose: false
+  # GATEWAY-LEVEL GUARDRAILS — enforced for every consumer (see guardrails/callback.py)
+  callbacks: guardrails.callback.proxy_handler_instance
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY
+  database_url: os.environ/DATABASE_URL
+  salt_key: os.environ/LITELLM_SALT_KEY

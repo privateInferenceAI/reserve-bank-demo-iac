@@ -1,0 +1,7 @@
+aws_region          = "us-east-1"
+admin_cidr          = "YOUR_PUBLIC_IP/32"
+ec2_key_name        = "YOUR_EC2_KEY_NAME"
+acm_certificate_arn = "arn:aws:acm:us-east-1:YOUR_ACCOUNT:certificate/YOUR_CERT_ID"
+db_password         = "CHANGE_ME_32_CHARS_MIN"
+litellm_master_key  = "sk-CHANGE_ME"
+litellm_salt_key    = "CHANGE_ME_32_CHARS"
