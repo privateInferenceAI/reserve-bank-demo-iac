@@ -11,10 +11,7 @@ apt-get install -y docker.io docker-compose-plugin git curl jq awscli amazon-clo
 cd /opt
 mkdir -p reserve-bank-demo
 cd reserve-bank-demo
-git clone https://github.com/privateInferenceAI/reserve-bank-demo.git .
-
-# Use the Terraform-specific compose file (no local Postgres, binds 0.0.0.0:4000)
-cp terraform/docker-compose.terraform.yml docker-compose.yml
+git clone https://github.com/privateInferenceAI/reserve-bank-demo-iac.git .
 
 # Pull secrets from Secrets Manager and write .env
 DB_PASSWORD=$(aws secretsmanager get-secret-value --secret-id "${db_secret_arn}" --query SecretString --output text)
