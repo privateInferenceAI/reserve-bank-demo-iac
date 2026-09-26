@@ -16,6 +16,7 @@ resource "aws_instance" "gateway" {
   vpc_security_group_ids = [aws_security_group.ec2.id]
   iam_instance_profile   = aws_iam_instance_profile.ec2.name
   key_name               = var.ec2_key_name
+  user_data_replace_on_change = true
 
   user_data = templatefile("${path.module}/user_data.sh", {
     project_name         = var.project_name
